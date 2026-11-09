@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>아트브리프 — 신뢰 매체로 보는 예술계 소식</title>
+  <meta name="description" content="국내외 신뢰할 수 있는 예술 전문 매체가 함께 다룬 주요 이슈를 모아 봅니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="brand" href="#">
+        <span class="brand__mark">아트브리프</span>
+        <span class="brand__sub">신뢰 매체로 보는 예술계 소식</span>
+      </a>
+      <nav class="tabs" aria-label="보기 전환">
+        <a href="#" data-view="issues">주요 이슈</a>
+        <a href="#exhibitions" data-view="exhibitions">전시</a>
+        <a href="#all" data-view="all">전체 기사</a>
+        <a href="#sources" data-view="sources">매체 목록</a>
+      </nav>
+    </div>
+    <div class="wrap meta">
+      <span id="meta"></span>
+      <div class="seg seg--sm" id="lang" role="group" aria-label="해외 기사 언어">
+        <button data-v="ko" class="on">번역</button><button data-v="orig">원문</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="view-issues">
+      <div class="sec-head">
+        <h2>최근 3일 주요 이슈</h2>
+        <p>최근 3일 동안 두 곳 이상의 전문 매체가 함께 보도한 소식입니다. 보도한 매체가 많은 순서입니다.</p>
+      </div>
+      <div id="issues"></div>
+
+      <section class="home-sec">
+        <div class="sec-head sec-head--sm"><h2>국내 소식</h2><p>국내 예술 전문 매체의 최신 기사</p></div>
+        <div class="item-grid" id="domestic"></div>
+      </section>
+      <section class="home-sec">
+        <div class="sec-head sec-head--sm"><h2>그 밖의 주목할 소식</h2><p>인사·시장·부고·문화유산 분야의 해외 소식</p></div>
+        <div class="item-grid" id="notable"></div>
+      </section>
+      <a class="more" href="#all">전체 기사 보기 →</a>
+    </section>
+
+    <section id="view-exhibitions" hidden>
+      <div class="sec-head">
+        <h2>지금 볼 수 있는 전시</h2>
+        <p id="ex-desc"></p>
+      </div>
+      <div class="toolbar">
+        <input id="exq" type="search" placeholder="전시명·작가·장소 검색 (예: 서도호, 판화)" aria-label="전시 검색">
+        <div class="seg" id="excity" role="group" aria-label="지역"></div>
+        <select id="exmuseum" aria-label="기관 선택"><option value="all">기관 전체</option></select>
+      </div>
+      <div id="ex-sections"></div>
+      <p class="empty" id="ex-empty" hidden>조건에 맞는 전시가 없습니다.</p>
+    </section>
+
+    <section id="view-all" hidden>
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="제목·요약 검색 (예: 비엔날레, 이건희, Basel)" aria-label="검색">
+        <div class="seg" id="region" role="group" aria-label="지역">
+          <button data-v="all" class="on">전체</button><button data-v="국내">국내</button><button data-v="해외">해외</button>
+        </div>
+        <div class="seg" id="range" role="group" aria-label="기간">
+          <button data-v="1">오늘</button><button data-v="3" class="on">3일</button><button data-v="7">7일</button><button data-v="30">30일</button>
+        </div>
+        <select id="source" aria-label="매체 선택"><option value="all">매체 전체</option></select>
+      </div>
+      <div class="chips" id="cats" role="group" aria-label="분야"></div>
+      <div id="list"></div>
+      <p class="empty" id="empty" hidden>조건에 맞는 기사가 없습니다.</p>
+    </section>
+
+    <section id="view-sources" hidden>
+      <h2 class="section-title">수집 매체와 선정 기준</h2>
+      <div class="criteria">
+        <div><b>예술 전문 매체만</b><p>편집 방침과 발행 이력을 갖춘 미술·예술 전문지와 전문 웹진, 미술계 공식 발표 채널에서만 수집합니다.</p></div>
+        <div><b>일반 뉴스는 제외</b><p>통신사·종합일간지 문화면처럼 예술을 부분적으로 다루는 일반 언론은 넣지 않습니다.</p></div>
+        <div><b>주요 이슈 선정 방식</b><p>같은 소식을 여러 전문 매체가 함께 다루면 하나의 이슈로 묶고, 보도한 매체 수로 중요도를 매깁니다.</p></div>
+      </div>
+      <div id="source-table"></div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    기사 제목과 요약은 각 매체의 공개 피드에서 가져왔으며, 저작권은 해당 매체에 있습니다. 해외 기사는 자동 번역입니다. 전문은 원문 링크에서 읽어 주세요.
+  </footer>
+
+  <script src="data/news.js"></script>
+  <script src="data/exhibitions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

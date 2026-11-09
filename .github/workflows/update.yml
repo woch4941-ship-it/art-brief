@@ -1,0 +1,66 @@
+# 뉴스·전시를 수집해 GitHub Pages 로 배포한다.
+# 하루 두 번(한국시간 오전 7시, 오후 7시) 자동 실행되고, Actions 탭에서 직접 실행할 수도 있다.
+name: 수집 및 배포
+
+on:
+  schedule:
+    - cron: "0 22 * * *"  # 07:00 KST
+    - cron: "0 10 * * *"  # 19:00 KST
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write  # 수집한 데이터(번역 캐시 포함)를 저장소에 커밋
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 뉴스·전시 수집
+        # push 로 실행될 때는 이미 올라온 데이터를 그대로 배포한다
+        if: github.event_name != 'push'
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python collect.py
+
+      - name: 수집 데이터 커밋
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "데이터 갱신: $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
