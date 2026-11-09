@@ -1,11 +1,10 @@
 # 뉴스·전시를 수집해 GitHub Pages 로 배포한다.
-# 하루 두 번(한국시간 오전 7시, 오후 7시) 자동 실행되고, Actions 탭에서 직접 실행할 수도 있다.
+# 하루 한 번(한국시간 오전 7시) 자동 실행되고, Actions 탭에서 직접 실행할 수도 있다.
 name: 수집 및 배포
 
 on:
   schedule:
     - cron: "0 22 * * *"  # 07:00 KST
-    - cron: "0 10 * * *"  # 19:00 KST
   workflow_dispatch:
   push:
     branches: [main]

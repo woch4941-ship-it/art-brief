@@ -6,7 +6,7 @@
 
 https://woch4941-ship-it.github.io/art-brief/
 
-GitHub Actions(`.github/workflows/update.yml`)가 하루 두 번(한국시간 오전 7시·오후 7시) 뉴스와 전시를 수집해 자동으로 배포합니다. 저장소의 Actions 탭에서 '수집 및 배포'를 골라 직접 실행할 수도 있습니다.
+GitHub Actions(`.github/workflows/update.yml`)가 하루 한 번(한국시간 오전 7시) 뉴스와 전시를 수집해 자동으로 배포합니다. 저장소의 Actions 탭에서 '수집 및 배포'를 골라 직접 실행할 수도 있습니다.
 
 ## 사용법 (내 컴퓨터에서)
 
